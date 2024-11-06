@@ -20,3 +20,27 @@ const OpenpayLib = NativeModules.OpenpayLib
 export function multiply(a: number, b: number): Promise<number> {
   return OpenpayLib.multiply(a, b);
 }
+
+export async function initOpenpay(args: Args): Promise<boolean> {
+  return await OpenpayLib.initOpenpay(args);
+}
+export async function getDeviceSessionId(): Promise<string> {
+  return await OpenpayLib.getDeviceSessionId();
+}
+export async function createToken(card: Card): Promise<any> {
+  return await OpenpayLib.createToken(card);
+}
+
+export type Args = {
+  merchantId: string;
+  apiKey: string;
+  productionMode: boolean;
+};
+
+export type Card = {
+  holderName: string;
+  cardNumber: string;
+  cvv: string;
+  expirationMonth: string;
+  expirationYear: string;
+};
