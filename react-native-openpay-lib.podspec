@@ -15,6 +15,11 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/henryvyh/react-native-openpay-lib.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,mm,swift}"
+  
+  s.frameworks = 'OpenpayKit'
+  s.preserve_paths = 'OpenpayKit.framework'
+  s.xcconfig = { 'OTHER_LDFLAGS' => '-framework OpenpayKit' }
+  s.ios.vendored_frameworks = 'ios/Frameworks/OpenpayKit.framework'
 
   # Use install_modules_dependencies helper to install the dependencies if React Native version >=0.71.0.
   # See https://github.com/facebook/react-native/blob/febf6b7f33fdb4904669f99d795eba4c0f95d7bf/scripts/cocoapods/new_architecture.rb#L79.

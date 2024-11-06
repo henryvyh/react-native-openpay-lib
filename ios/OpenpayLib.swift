@@ -1,9 +1,11 @@
 import Foundation
+import OpenpayKit
+import UIKit
 
 @objc(OpenpayLib)
 class OpenpayLib: NSObject {
 
-  //  private var openpay: Openpay?
+  var openpay : Openpay!
   private var initialized: Bool = false
 
   @objc(multiply:withB:withResolver:withRejecter:)
@@ -19,8 +21,9 @@ class OpenpayLib: NSObject {
       rejecter("INIT_ERROR", "Invalid arguments provided", nil)
       return
     }
-
-    // self.openpay = Openpay(withMerchantId: merchantId, apiKey: apiKey, productionMode: productionMode)
+     
+    self.openpay = Openpay(withMerchantId: merchantId, andApiKey: apiKey, isProductionMode: productionMode, isDebug: true,countryCode: "MX")
+     
     self.initialized = true
     resolver(true)
   } 
@@ -39,8 +42,20 @@ class OpenpayLib: NSObject {
     }
 
     do {
-      // Suponiendo que 'openpay.deviceCollectorDefaultImpl().setup' es una función válida
-            // Aquí debes reemplazarlo con la lógica real de Openpay para obtener el device session ID.
+       // TODO: Implementar la obtención del device session ID
+       // currently crashes when the device session is requested
+      // try  self.openpay.createDeviceSessionId(
+      //   successFunction: { sessionID in
+      //       // print("SessionID: \(sessionID)")
+      //       resolver(sessionID)
+             
+      //   },
+      //   failureFunction: { error in
+      //       // print("\(error.code) - \(error.localizedDescription)")
+      //       rejecter("DEVICE_SESSION_ERROR", "Failed to get device session ID", error) // Retorna el error en caso de fallo
+      //   }
+      //   )
+       //
       let deviceSessionId = "deviceSessionId" // Simulado, reemplaza con el real
       resolver(deviceSessionId)
     } catch let error {
@@ -49,7 +64,7 @@ class OpenpayLib: NSObject {
   } 
 
     @objc(createToken:resolver:rejecter:)
-    func createToken(cardDetails: NSDictionary, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+    func createToken(cardDetails: NSDictionary, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) -> Void {
         guard initialized else {
             rejecter("NOT_INITIALIZED", "Openpay is not initialized", nil)
             return
@@ -66,39 +81,16 @@ class OpenpayLib: NSObject {
         }
 
         // Crear el objeto tarjeta (suponiendo que Openpay tiene un objeto similar)
-        // let card = Card()
-        // card.holderName = holderName
-        // card.cardNumber = cardNumber
-        // card.expirationMonth = expirationMonth
-        // card.expirationYear = expirationYear
-        // card.cvv2 = cvv2
-
-        // Llamar a Openpay para crear el token
-        // openpay.createToken(card, success: { token in
-        //     print("Generated Token: \(String(describing: token))")
-        //     resolver(token?.id)
-        // }, failure: { serviceException in
-        //     let errorCode = serviceException?.errorCode ?? "UNKNOWN_ERROR"
-        //     var errorDescription = "Unknown error"
-            
-        //     switch serviceException?.errorCode {
-        //     case 3001:
-        //         errorDescription = "The card was declined by the bank."
-        //     case 3002:
-        //         errorDescription = "The card has expired."
-        //     case 3003:
-        //         errorDescription = "Insufficient funds."
-        //     case 3004:
-        //         errorDescription = "The card was reported as stolen."
-        //     case 3005:
-        //         errorDescription = "Fraud suspected."
-        //     default:
-        //         errorDescription = "Error code: \(errorCode). Check Openpay documentation for details."
-        //     }
-        //     rejecter(errorCode, errorDescription, nil)
-        // })
-
-        resolver(cardNumber)
+        let card = TokenizeCardRequest(cardNumber: cardNumber,holderName:holderName, expirationYear: expirationYear, expirationMonth: expirationMonth, cvv2: cvv2)
+        
+      self.openpay.tokenizeCard(card: card) { (OPToken) in
+          print(OPToken.id)     
+          resolver(OPToken.id) 
+          NSLog("Generated Device Session ID:\(OPToken.id)")       
+      } failureFunction: { (NSError) in
+          NSLog("Generated Device Session ID:\(NSError)")  
+          rejecter("INVALID_CARD_TOKEN", "Card details are invalid:\(NSError)", nil) 
+      }
         
     }
 
