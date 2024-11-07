@@ -36,28 +36,28 @@ class OpenpayLib: NSObject {
       return
     }
 
-    guard let currentActivity = UIApplication.shared.delegate?.window??.rootViewController else {
-      rejecter("DEVICE_SESSION_ERROR", "No current activity available", nil)
-      return
-    }
+    // guard let currentActivity = UIApplication.shared.delegate?.window??.rootViewController else {
+    //   rejecter("DEVICE_SESSION_ERROR", "No current activity available", nil)
+    //   return
+    // }
 
     do {
        // TODO: Implementar la obtención del device session ID
        // currently crashes when the device session is requested
-      // try  self.openpay.createDeviceSessionId(
-      //   successFunction: { sessionID in
-      //       // print("SessionID: \(sessionID)")
-      //       resolver(sessionID)
+      try  self.openpay.createDeviceSessionId(
+        successFunction: { sessionID in
+            // print("SessionID: \(sessionID)")
+            resolver(sessionID)
              
-      //   },
-      //   failureFunction: { error in
-      //       // print("\(error.code) - \(error.localizedDescription)")
-      //       rejecter("DEVICE_SESSION_ERROR", "Failed to get device session ID", error) // Retorna el error en caso de fallo
-      //   }
-      //   )
+        },
+        failureFunction: { error in
+            // print("\(error.code) - \(error.localizedDescription)")
+            rejecter("DEVICE_SESSION_ERROR", "Failed to get device session ID", error) // Retorna el error en caso de fallo
+        }
+        )
        //
-      let deviceSessionId = "deviceSessionId" // Simulado, reemplaza con el real
-      resolver(deviceSessionId)
+      // let deviceSessionId = "deviceSessionId" // Simulado, reemplaza con el real
+      // resolver(deviceSessionId)
     } catch let error {
       rejecter("DEVICE_SESSION_ERROR", "Failed to get device session ID", error)
     }
