@@ -21,7 +21,11 @@ class OpenpayLib: NSObject {
       rejecter("INIT_ERROR", "Invalid arguments provided", nil)
       return
     }
-     
+     NSLog("merchantId: \(merchantId)")
+    NSLog("apiKey: \(apiKey)")
+    NSLog("productionMode: \(productionMode)")
+
+
     self.openpay = Openpay(withMerchantId: merchantId, andApiKey: apiKey, isProductionMode: productionMode, isDebug: true,countryCode: "MX")
      
     self.initialized = true
@@ -44,17 +48,17 @@ class OpenpayLib: NSObject {
     do {
        // TODO: Implementar la obtención del device session ID
        // currently crashes when the device session is requested
-      // try  self.openpay.createDeviceSessionId(
-      //   successFunction: { sessionID in
-      //       // print("SessionID: \(sessionID)")
-      //       resolver(sessionID)
+      try  self.openpay.createDeviceSessionId(
+        successFunction: { sessionID in
+            // print("SessionID: \(sessionID)")
+            resolver(sessionID)
              
-      //   },
-      //   failureFunction: { error in
-      //       // print("\(error.code) - \(error.localizedDescription)")
-      //       rejecter("DEVICE_SESSION_ERROR", "Failed to get device session ID", error) // Retorna el error en caso de fallo
-      //   }
-      //   )
+        },
+        failureFunction: { error in
+            // print("\(error.code) - \(error.localizedDescription)")
+            rejecter("DEVICE_SESSION_ERROR", "Failed to get device session ID", error) // Retorna el error en caso de fallo
+        }
+        )
        //
       let deviceSessionId = "deviceSessionId" // Simulado, reemplaza con el real
       resolver(deviceSessionId)
@@ -79,9 +83,9 @@ class OpenpayLib: NSObject {
             rejecter("INVALID_CARD_DETAILS", "Card details are incomplete or invalid", nil)
             return
         }
-
         // Crear el objeto tarjeta (suponiendo que Openpay tiene un objeto similar)
         let card = TokenizeCardRequest(cardNumber: cardNumber,holderName:holderName, expirationYear: expirationYear, expirationMonth: expirationMonth, cvv2: cvv2)
+        
         
       self.openpay.tokenizeCard(card: card) { (OPToken) in
           print(OPToken.id)     

@@ -40,6 +40,7 @@
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = OpenpayLibExample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-OpenpayLibExample-OpenpayLibExampleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OpenpayLibExample-OpenpayLibExampleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-OpenpayLibExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenpayLibExample.debug.xcconfig"; path = "Target Support Files/Pods-OpenpayLibExample/Pods-OpenpayLibExample.debug.xcconfig"; sourceTree = "<group>"; };
+		4CB4EE1E2CE0288E002EF473 /* OpenpayKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OpenpayKit.xcframework; path = Pods/Openpaykit/OpenpayKit.xcframework; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-OpenpayLibExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenpayLibExample.release.xcconfig"; path = "Target Support Files/Pods-OpenpayLibExample/Pods-OpenpayLibExample.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-OpenpayLibExample-OpenpayLibExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenpayLibExample-OpenpayLibExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-OpenpayLibExample-OpenpayLibExampleTests/Pods-OpenpayLibExample-OpenpayLibExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-OpenpayLibExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OpenpayLibExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,6 +103,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4CB4EE1E2CE0288E002EF473 /* OpenpayKit.xcframework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-OpenpayLibExample.a */,
 				19F6CBCC0A4E27FBF8BF4A61 /* libPods-OpenpayLibExample-OpenpayLibExampleTests.a */,
